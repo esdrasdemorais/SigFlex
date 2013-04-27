@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/sig/!svn/ver/129/trunk/application/models
+END
+SecurityPlugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/sig/!svn/ver/2/trunk/application/models/SecurityPlugin.php
+END
+ReqCompras.php
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/sig/!svn/ver/199/trunk/application/models/ReqCompras.php
+END
+ContratosTipos.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/sig/!svn/ver/170/trunk/application/models/ContratosTipos.php
+END
+Usuario.php
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/sig/!svn/ver/214/trunk/application/models/Usuario.php
+END
+AcessPrivilegesVO.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/sig/!svn/ver/216/trunk/application/models/AcessPrivilegesVO.php
+END
+UsuarioVO.php
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/sig/!svn/ver/207/trunk/application/models/UsuarioVO.php
+END
+ReqComprasVO.php
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/sig/!svn/ver/203/trunk/application/models/ReqComprasVO.php
+END
+Contrato.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/sig/!svn/ver/206/trunk/application/models/Contrato.php
+END
+Controle.php
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/sig/!svn/ver/217/trunk/application/models/Controle.php
+END

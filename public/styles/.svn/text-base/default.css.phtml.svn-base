@@ -1,0 +1,160 @@
+<?php
+header('Content-type: text/css');
+$baseUrl = $_GET['baseUrl'];
+?>
+body,html
+{
+	background:#EEE;
+	color:#474295;
+	font-family:Arial,Verdana,Helvetica,sans-serif;
+	font-size:100%;
+	margin:0;
+	padding:0;
+}
+h1
+{
+	font-size:1.4em;
+	color:#800000;
+	background:#FFF;
+	background-color:transparent;
+}
+h2
+{
+	background:#FFF;
+}
+#content
+{
+	width:1000px;
+	margin:0 auto;
+}
+label
+{
+	width:200px;
+	display:block;
+	float:left;
+}
+#formbutton
+{
+	margin-left:100px;
+}
+a
+{
+	color:#160F83;
+}
+select, textarea, input
+{
+	color:#000;
+	font:12px Tahoma, Arial;
+}
+#header
+{
+	float:left;
+	width:100%;
+	height:60px;
+	margin:0;
+	padding:0;
+	background:#E1EDF9 url("<?php echo($baseUrl);?>/public/images/header.jpg") center;
+	background-repeat:no-repeat;
+}
+#menu_bar
+{
+	clear:both;
+	width:100%;
+	margin:0;
+	padding:5px 0;
+	background:url("<?php echo($baseUrl);?>/public/images/menu_background.gif") center;
+	background-repeat:repeat-x;
+	font:14px Arial,Verdana;
+}
+#menu_bar ul
+{
+	width:100%;
+	margin:0;
+	padding:0;
+	text-align:center;
+}
+#menu_bar ul li
+{
+	display:inline;
+	list-style:none;
+	line-height:16px;
+	margin:0 15px;
+	padding:0 10px;
+	border-right:1px solid #000;
+}
+#menu_bar ul li a:link
+{
+	color:#FFF;
+	text-decoration:none;
+}
+#menu_bar ul li a:visited
+{
+	color:#AAA;
+	text-decoration:none;
+}
+#menu_bar ul li a:hover
+{
+	color:#AAA;
+	text-decoration:underline;
+}
+#menu_bar ul li a:active
+{
+	color:#474295;
+	text-decoration:none;
+}
+#menu_icons
+{
+	clear:both;
+	width:100%;
+	margin:0;
+	padding:5px 0;
+	background:#FFF;
+	color:#000;
+	font-size:12px;
+	font-family: Verdana,Arial,Helvetica,Sans-Serif;
+}
+#menu_icons ul
+{
+	width:100%;
+	margin:0;
+	padding:0;
+	text-align:center;
+}
+#menu_icons ul li
+{
+	display:inline;
+	list-style:none;
+	line-height:16px;
+	margin:0 15px;
+	padding:0 10px;
+	border-right:1px solid #000;
+}
+#menu_icons ul li a:link
+{
+	color:#000;
+	text-decoration:none;
+}
+#menu_icons ul li a:visited
+{
+	color:#474295;
+	text-decoration:none;
+}
+#menu_icons ul li a:hover
+{
+	color:#AAA;
+	text-decoration:underline;
+}
+#menu_icons ul li a:active
+{
+	color:#474295;
+	text-decoration:none;
+}
+.center_block
+{
+	text-align:center;
+}
+#footer_dev 
+{
+	border:1px solid #160F83;
+	text-align:center;
+}

@@ -1,0 +1,8 @@
+<div id="Controle">
+<h2><?php echo($this->title);?></h2>
+<?php
+/** Debug */
+echo "<!--<pre>"; print_r($this); echo "<pre>-->";
+?>
+<?php echo($this->form);?>
+</div>

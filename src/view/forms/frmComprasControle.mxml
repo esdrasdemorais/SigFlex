@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MDIWindow xmlns="flexmdi.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="800" height="600" backgroundAlpha="0.75" alpha="1.0" cornerRadius="10" borderStyle="solid" horizontalScrollPolicy="off" verticalScrollPolicy="off" borderColor="#000000" backgroundColor="#FFFFFF" borderAlpha="0" title="Compras - Controle" horizontalAlign="center" verticalAlign="middle" resizeStart="this.minWidth=800;minHeight=600" resizeEnd="this.minWidth=200;this.minHeight=200" initialize="btnRequisicoes_click()">
+	
+	<mx:Metadata>
+		[Event(name="visualizarRelatorio", type="events.ReportEvent")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			/* *************** Importa Classes e Componentes Utilizados em todos os scripts ************* */
+			import events.ReportEvent;
+			
+			import flash.events.MouseEvent;
+			import flash.utils.describeType;
+			
+			import models.ModelLocatorReport;
+			
+			import mx.collections.ArrayCollection;
+			import mx.containers.TitleWindow;
+			import mx.controls.Alert;
+			import mx.controls.Button;
+			import mx.controls.TextInput;
+			import mx.controls.dataGridClasses.DataGridColumn;
+			import mx.events.CloseEvent;
+			import mx.events.ListEvent;
+			import mx.managers.PopUpManager;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.utils.ObjectUtil;
+			
+			import org.doc.Document;
+			import org.doc.PaperFormat;
+			
+			import view.reports.custom.PreviewWindow;
+			import view.reports.dataproviders.DPTemplatePadrao;
+			import view.reports.templates.TemplatePadrao;
+			
+			//import templates.dataproviders.DemoReportDP;
+			//import templates.demo.DemoReport;
+			/* *************** Importa Classes e Componentes Utilizados em todos os scripts ************* */
+		]]>
+	</mx:Script>
+	
+	<!-- Script Genérico da tela de Controle -->
+	<mx:Script source="../../scripts/controle/scrComprasControle.as"/>
+	
+	<!-- Script da tela de Requisições -->
+	<mx:Script source="../../scripts/controle/scrComprasRequisicoes.as"/>
+	
+	<!-- Script da tela de ApCotações -->
+	<mx:Script source="../../scripts/controle/scrComprasApCotacoes.as"/>
+	
+	<!-- Script da tela de Correções -->
+	<mx:Script source="../../scripts/controle/scrComprasCorrecoes.as"/>
+	
+	<!-- Script da tela de Cotações -->
+	<mx:Script source="../../scripts/controle/scrComprasCotacoes.as"/>
+
+	<mx:Script>
+		<![CDATA[
+			private function test(event:ResultEvent):void
+			{
+				Alert.show(ObjectUtil.toString(event.result));
+			}
+		]]>
+	</mx:Script>
+
+	<!--
+		Objeto responsável em conectar no servidor Zend AMF PHP e mapear a Classe PHP Controle.
+	-->
+	<mx:RemoteObject id="modelControle" fault="faultHandler(event)" showBusyCursor="true" 
+		destination="zend" endpoint="http://172.16.14.217/sig/messagebroker/amf" 
+		source="Controle">
+		
+		<mx:method name="getRequisicoes"
+			result="resultHandlerPrincipal(event)"
+			fault="onError(event)"
+		/>
+		<mx:method name="getRequisicoesPendentesCorrecoes" 
+			result="resultHandlerRequisicoesPendentes(event)" 
+			fault="onError(event)"
+			/>
+		<mx:method name="saveComentario"
+			result="resultHandlerSalvarComentario(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="getHistoricoComentariosRequisicao"
+			result="resultHandlerHistoricoComentariosRequisicao(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="saveCompradorRequisicao"
+			result="resultHandlerSalvarCompradorRequisicao(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="getItensRequisicao"
+			result="resultHandlerItensRequisicao(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="getApCotacoes"
+			result="resultHandlerApCotacoes(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="getApCotacoesPendentesAprovacao"
+			result="resultHandlerApCotacoesPendentesAprovacao(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="getDiretores"
+			result="resultHandlerDiretores(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="getCompradores"
+			result="resultHandlerCompradores(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="getCotacoes"
+			result="resultHandlerCotacoes(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="getRequisicoesCotacao"
+			result="resultHandlerRequisicoesCotacao(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="getRequisicaoCorrecao"
+			result="resultHandlerRequisicaoCorrecao(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="saveCorrecaoRequisicao"
+			result="resultHandlerSaveCorrecaoRequisicao(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="getContratosCotacao"
+			result="resultHandlerContratosCotacao(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="updateCompradorRequisicao"
+			result="resultHandlerUpdateCompradorRequisicao(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="updateAprovCompra"
+			result="resultHandlerUpdateAprovCompra(event)"
+			fault="onError(event)"
+			/>
+		<mx:method name="updateCorrigirRequisicao"
+			result="resultHandlerCorrigirRequisicao(event)"
+			fault="onError(event)"
+			/>
+			
+	</mx:RemoteObject>
+	
+	<mx:RemoteObject id="serviceReqCompras" fault="faultHandler(event)" showBusyCursor="true" 
+		destination="zend" endpoint="http://172.16.14.217/sig/messagebroker/amf" 
+		source="ReqComprasService">
+		
+		<mx:method name="cslReqCompras"
+			result="resultHandlerClsReqCompras(event)"
+			fault="onError(event)"/>
+		
+	</mx:RemoteObject>
+	
+	
+	<mx:Canvas backgroundColor="#A3D5DB" backgroundAlpha="0.4" cornerRadius="10" verticalScrollPolicy="off" horizontalScrollPolicy="off" borderStyle="solid" borderColor="#FFFFFF" borderThickness="0" shadowDirection="center" horizontalCenter="0" verticalCenter="0" width="100%" height="100%">
+		<mx:DataGrid x="10" y="46" width="59%" height="36%" id="grdPrincipal" wordWrap="false" horizontalScrollPolicy="auto" itemRenderer="mx.controls.Label" change="onChangePrincipal(event)" itemDoubleClick="onDoubleClickPrincipal(event)">
+			<mx:columns>
+				<mx:DataGridColumn visible="true"/>
+				<mx:DataGridColumn visible="true"/>
+				<mx:DataGridColumn visible="true"/>
+				<mx:DataGridColumn visible="true"/>
+				<mx:DataGridColumn visible="true"/>
+				<mx:DataGridColumn visible="true"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:DataGrid y="46" width="37%" height="36%" right="11" id="grdRequisicoes" wordWrap="false" horizontalScrollPolicy="auto" change="onChangeRequisicoes(event)" itemDoubleClick="onDoubleClickRequisicoes(event)">
+			<mx:columns>
+				<mx:DataGridColumn/>
+				<mx:DataGridColumn/>
+				<mx:DataGridColumn/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:ApplicationControlBar x="10" width="65%" height="18%" verticalCenter="21">
+			<mx:Grid width="100%" height="100%">
+				<mx:GridRow width="100%" height="100%">
+					<mx:GridItem width="502" height="100%" colSpan="4" verticalAlign="middle">
+						<mx:Button label="Requisições" width="25%" id="btnRequisicoes" click="btnRequisicoes_click()"/>
+						<mx:Button label="Ap. Cotações" width="25%" id="btnApCotacoes" click="btnApCotacoes_click()"/>
+						<mx:Button label="Correções" width="25%" id="btnCorrecoes" click="btnCorrecoes_click()"/>
+						<mx:Button label="Cotações" width="25%" id="btnCotacoes" click="btnCotacoes_click()"/>
+				</mx:GridItem>
+				</mx:GridRow>
+				<mx:GridRow width="100%" height="100%">
+					<mx:GridItem width="25%" height="100%" verticalAlign="middle">
+						<mx:Button label="Corrigir" width="80%" id="btnCorrigir" click="btnCorrigir_click()" />
+					</mx:GridItem>
+					<mx:GridItem width="50%" height="100%" verticalAlign="middle" horizontalScrollPolicy="off" verticalScrollPolicy="off" horizontalAlign="center">
+						<mx:RadioButton label="Requisições" id="optRequisicoes" selected="true" click="optRequisicoes_click()" enabled="false" width="50%"/>
+						<mx:RadioButton label="Contratos" id="optContratos" click="optContratos_click()" enabled="false" width="50%"/>
+					</mx:GridItem>
+					<mx:GridItem width="10%" height="100%" verticalAlign="middle" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+						<mx:CheckBox label="Grade" width="100%" id="chkGrade" enabled="false"/>
+					</mx:GridItem>
+					<mx:GridItem width="15%" height="100%" verticalAlign="middle">
+						<mx:DateField width="100%" id="dtfDtInicial" enabled="false" change="dtfDtInicial_onchange()" formatString="DD/MM/YYYY" dayNames="[&quot;Dom&quot;, &quot;Seg&quot;, &quot;Ter&quot;, &quot;Qua&quot;, &quot;Qui&quot;, &quot;Sex&quot;, &quot;Sáb&quot;]" showToday="true">
+							<mx:monthNames>[&quot;Janeiro&quot;, &quot;Fevereiro&quot;, &quot;Março&quot;, &quot;Abril&quot;, &quot;Maio&quot;, &quot;Junho&quot;, &quot;Julho&quot;, &quot;Agosto&quot;, &quot;Setembro&quot;, &quot;Outubro&quot;, &quot;Novembro&quot;, &quot;Dezembro&quot; ]</mx:monthNames>
+						</mx:DateField>
+					</mx:GridItem>
+				</mx:GridRow>
+			</mx:Grid>
+		</mx:ApplicationControlBar>
+		<mx:DataGrid width="98%" height="34%" bottom="10" horizontalCenter="-1" id="grdItensRequisicao" editable="false">
+			<mx:columns>
+				<mx:DataGridColumn />
+				<mx:DataGridColumn />
+				<mx:DataGridColumn />
+				<mx:DataGridColumn />
+				<mx:DataGridColumn />
+				<mx:DataGridColumn />
+				<mx:DataGridColumn />
+			</mx:columns>
+		</mx:DataGrid>
+		
+		<!-- Grupo de mensagens para correções !-->
+		<mx:ApplicationControlBar verticalAlign="top" visible="true" id="ctbMensagem" height="18%" verticalCenter="21" right="11" width="31%">
+			<mx:Grid width="100%" height="100%" paddingBottom="0">
+				<mx:GridRow width="100%" height="100%">
+					<mx:GridItem width="100%" height="40" verticalAlign="bottom">
+						<mx:TextArea width="100%" height="100%" id="txaMensagem" wordWrap="true" editable="true"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				<mx:GridRow width="100%" height="27">
+					<mx:GridItem width="100%" height="29" verticalAlign="middle" horizontalAlign="center">
+						<mx:Button label="Visualizar" width="70%" id="btnVisuMens" click="btnVisualizar_click(event)"/>
+						<mx:Button label="Enviar" id="btnEnviar" width="25%" click="btnEnviarComentario_click(event)"/>
+					</mx:GridItem>
+				</mx:GridRow>
+			</mx:Grid>
+		</mx:ApplicationControlBar>
+		<mx:ApplicationControlBar x="10" y="10" width="59%" height="28" autoLayout="false" id="ctbLista1">
+		<mx:Label text="000" width="33" fontSize="12" fontWeight="bold" selectable="false" truncateToFit="true" id="lblListaPrincipalCounter" textAlign="right"/>
+		<mx:Label text="Histórico" width="100%" fontSize="12" fontWeight="bold" tabChildren="false" id="lblLista1" selectable="false" truncateToFit="true"/>
+		</mx:ApplicationControlBar>
+		<mx:ApplicationControlBar y="10" width="37%" height="28" right="11" autoLayout="false" id="ctbLista2">
+			<mx:Label text="000" fontWeight="bold" fontSize="12" width="35" selectable="false" truncateToFit="true"/>
+			<mx:Label text="Lista de Requisições" id="lblLista2" fontWeight="bold" fontSize="12" textAlign="left" width="100%" selectable="false" truncateToFit="true"/>
+		</mx:ApplicationControlBar>
+		<!-- Grupo de mensagens para correções !-->
+
+	
+		<!-- Grupo de Crompadores !-->
+		<mx:ApplicationControlBar verticalAlign="top" visible="false" id="ctbCompradores" height="18%" verticalCenter="21" right="11" width="31%">
+			<mx:Grid width="100%" height="100%">
+				<mx:GridRow width="100%" height="100%">
+					<mx:GridItem width="100%" height="9">
+						<mx:Label text="Compradores" fontWeight="bold" width="100%" height="23" textAlign="center" fontSize="14" alpha="0.0"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				<mx:GridRow width="100%" height="100%">
+					<mx:GridItem width="100%" height="100%">
+						<mx:ComboBox width="100%" height="20%" id="cboCompradores"></mx:ComboBox>
+					</mx:GridItem>
+				</mx:GridRow>
+				<mx:GridRow width="100%" height="100%">
+					<mx:GridItem width="100%" height="100%">
+						<mx:Button label="Visualizar" width="100%" id="btnVisuCompr" height="24"/>
+					</mx:GridItem>
+				</mx:GridRow>
+			</mx:Grid>
+		</mx:ApplicationControlBar>
+		<!-- Grupo de Crompadores !-->
+
+		<!-- Grupo de diretores e gerentes !-->
+		<mx:ApplicationControlBar verticalAlign="top" visible="false" id="ctbDiretoria" height="18%" verticalCenter="21" right="11" width="31%">
+			<mx:Grid width="100%" height="100%">
+				<mx:GridRow width="100%" height="100%">
+					<mx:GridItem width="100%" height="9">
+						<mx:Label text="Diretores/Gerentes" fontWeight="bold" width="100%" height="23" textAlign="center" fontSize="14" alpha="0.0"/>
+					</mx:GridItem>
+				</mx:GridRow>
+				<mx:GridRow width="100%" height="100%">
+					<mx:GridItem width="100%" height="100%">
+						<mx:ComboBox width="100%" height="21" id="cboDiretoria"><mx:ArrayCollection>
+							<mx:Array>
+								Diretoria
+							</mx:Array>
+						</mx:ArrayCollection></mx:ComboBox>
+				</mx:GridItem>
+				</mx:GridRow>
+				<mx:GridRow width="100%" height="100%">
+					<mx:GridItem width="100%" height="100%">
+						<mx:Button label="Aprovar" width="100%" id="btnAprov" click="btnAprovar_Click(event)"/>
+					</mx:GridItem>
+				</mx:GridRow>
+			</mx:Grid> 
+		</mx:ApplicationControlBar>
+		<!-- Grupo de diretores e gerentes !-->
+		
+		<!-- Text Area com o Histórico de Comentário das correções da Requisição (Aberto com o Botão Correções) !-->
+		<mx:TextArea width="59%" height="36%" x="10" y="46" id="txaHistorico" wordWrap="true" visible="false" editable="false"/>
+
+	</mx:Canvas>
+	
+</MDIWindow>

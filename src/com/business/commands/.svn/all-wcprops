@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/sig/!svn/ver/195/trunk/src/com/business/commands
+END
+LoginCommand.as
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/sig/!svn/ver/195/trunk/src/com/business/commands/LoginCommand.as
+END
+GenerateSIDCommand.as
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/sig/!svn/ver/195/trunk/src/com/business/commands/GenerateSIDCommand.as
+END

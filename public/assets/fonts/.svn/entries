@@ -1,0 +1,54 @@
+8
+
+dir
+221
+https://server1.proguaru.sa:8383/svn/sig/trunk/public/assets/fonts
+https://server1.proguaru.sa:8383/svn/sig
+
+
+
+2010-07-13T12:44:39.738509Z
+150
+esdrassilva
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+cf2417c3-a2e5-eb4d-bfd9-42f5932bce7e
+
+timeless.TTF
+file
+
+
+
+
+2010-08-02T11:14:24.459000Z
+204df41caea46cc1bdecab1b4cf793c0
+2010-07-13T12:44:34.410281Z
+149
+esdrassilva
+has-props
+
+timelessb.TTF
+file
+
+
+
+
+2010-08-02T11:14:24.490000Z
+1aee265066f0abf357b138e6eba36b2a
+2010-07-13T12:44:39.738509Z
+150
+esdrassilva
+has-props
+

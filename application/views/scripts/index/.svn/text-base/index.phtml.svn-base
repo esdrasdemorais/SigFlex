@@ -1,0 +1,7 @@
+<?php //echo($this->render('header.tpl.phtml'));?>
+<div class="center_block">
+	<h2>MÓDULO COMPRAS</h2>
+	<h2>PROGUARU</h2>
+	<h2>Vers&atilde;o 1.0</h2>
+</div>
+<?php //echo($this->render('footer.tpl.phtml'));?>

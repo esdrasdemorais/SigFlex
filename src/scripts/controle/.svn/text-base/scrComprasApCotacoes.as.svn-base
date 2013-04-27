@@ -1,0 +1,100 @@
+// Ap Cotações ActionScript file
+import flash.events.MouseEvent;
+
+import mx.controls.Alert;
+import mx.utils.ObjectUtil;
+
+
+private function btnApCotacoes_click():void
+{
+	//Define o modo de exibição
+	modo = 2;
+	//Desabilita os controles que não serão usados
+	optRequisicoes.enabled = false;
+	optContratos.enabled   = false;
+	chkGrade.enabled       = false;
+	dtfDtInicial.enabled   = false;
+	cboDiretoria.enabled   = true;
+	//Exibe a caixa de controle adequada
+	ctbCompradores.visible = false;
+	ctbMensagem.visible    = false;
+	//cboCompradores.visible = false;
+	ctbDiretoria.visible   = true;
+	//Exibe Grid principal de Requisição de Compra
+	grdPrincipal.visible   = true;
+	//Oculta o textarea de Histórico de Comentários
+	txaHistorico.visible   = false;
+
+	//Nomeia listas
+	lblLista1.text='COTAÇÕES PENDENTES: ';
+	lblLista2.text='PENS. APORV. ';
+	
+	//Carrega os combo com os Diretores 
+	modelControle.getDiretores();
+	
+	// Limpar Data Grid Principal
+	grdPrincipal.dataProvider = undefined;
+		
+	// Seta o Label do Grid Principal
+	DataGridColumn(grdPrincipal.columns[0]).headerText='COTAÇÕES';
+	DataGridColumn(grdPrincipal.columns[1]).headerText='DT EMISS';
+	DataGridColumn(grdPrincipal.columns[2]).headerText='DT GRADE';
+	DataGridColumn(grdPrincipal.columns[3]).headerText='TOTAL';
+	// Seta o Nome dos campos da SQL retornada para os valores do Grid Principal
+	DataGridColumn(grdPrincipal.columns[0]).dataField='COTAÇÕES';
+	DataGridColumn(grdPrincipal.columns[1]).dataField='DT EMISS';
+	DataGridColumn(grdPrincipal.columns[2]).dataField='DT GRADE';
+	DataGridColumn(grdPrincipal.columns[3]).dataField='TOTAL';
+	
+	// Limpar Data Grid Secundário
+	grdRequisicoes.dataProvider = null;
+	
+	// Seta o Label do Grid Complementar
+	DataGridColumn(grdRequisicoes.columns[0]).headerText='REQUIS';
+	DataGridColumn(grdRequisicoes.columns[1]).headerText='DT EMISS';
+	DataGridColumn(grdRequisicoes.columns[2]).headerText='DT Ident_Cotacoes';
+	// Seta o Nome dos campos da SQL retornada para os valores do Grid Principal
+	DataGridColumn(grdRequisicoes.columns[0]).dataField='REQUIS';
+	DataGridColumn(grdRequisicoes.columns[1]).dataField='DT EMISS';
+	DataGridColumn(grdRequisicoes.columns[2]).dataField='Ident_Cotacoes';
+	
+	// Carrega os dados do grid principal contendod os dados de aprovação de cotações
+	modelControle.getApCotacoes();
+	
+	// Carrega os dados das cotacoes pendentes de aprovação
+	//Alert.show("val="+cboDiretoria.value+"\n"+cboDiretoria.selectedItem);
+	//if(cboDiretoria.selectedIndex != -1 && cboDiretoria.value.length > 0)
+	//{
+		modelControle.getApCotacoesPendentesAprovacao(cboDiretoria.value);
+	//}
+}
+
+private function resultHandlerDiretores(event:ResultEvent):void
+{
+	//Alert.show(ObjectUtil.toString(event.result));
+
+	cboDiretoria.dataProvider = event.result;
+	cboDiretoria.labelField   = "RESPONSÁVEL";
+}
+
+private function resultHandlerApCotacoes(event:ResultEvent):void
+{
+	//Alert.show("result="+event.result[0].COTAÇÕES + "\n" + event.result[0].TOTAL);
+	grdPrincipal.dataProvider = event.result;
+}
+
+private function resultHandlerApCotacoesPendentesAprovacao(event:ResultEvent):void
+{
+	grdRequisicoes.dataProvider = event.result;	
+}
+
+private function btnAprovar_Click(event:MouseEvent):void
+{
+	Alert.show(''+cboDiretoria.selectedIndex+'\n\narray='+ObjectUtil.toString(cboDiretoria.selectedItem));
+	
+    // Alterar para puxar usuario do login
+	modelControle.updateAprovCompra('esdrassilva', cboDiretoria.selectedItem.ID, grdPrincipal.selectedItem.ID);
+	
+	// Atualiza GRIDS
+	btnApCotacoes_click();
+}

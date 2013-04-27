@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MDIWindow xmlns="flexmdi.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="762" height="614" title="Grade">
+	<mx:Canvas width="742" height="563">
+		<mx:Label text="Cotação" width="88" fontSize="16" fontWeight="bold" fontFamily="Verdana" horizontalCenter="-305" verticalCenter="-237"/>
+		<mx:Label text="1522" width="139" fontFamily="Verdana" fontSize="16" horizontalCenter="-183" verticalCenter="-237"/>
+		<mx:Label text="TINTAS VECAR LTDA" width="235" height="81" fontSize="16" truncateToFit="true" maxWidth="50" maxHeight="30" textAlign="left" alpha="1.0" fontWeight="bold" horizontalCenter="-231" verticalCenter="-140"/>
+		<mx:TextArea width="235" height="80" horizontalCenter="-231" verticalCenter="-25"/>
+		<mx:Label text="Observações" width="122" horizontalCenter="-288" verticalCenter="-82"/>
+		<mx:Label text="Empresa" width="122" horizontalCenter="-288" verticalCenter="-197"/>
+		<mx:DataGrid width="709" height="244" horizontalCenter="6" verticalCenter="149">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Nome" dataField="col1"/>
+				<mx:DataGridColumn headerText="Fantasia" dataField="col2"/>
+				<mx:DataGridColumn headerText="Empresa selecionada" dataField="col3"/>
+				<mx:DataGridColumn headerText="Código cotação" dataField="col4"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:DataGrid width="466" height="184" horizontalScrollPolicy="on" horizontalCenter="127" verticalCenter="-155">
+			<mx:columns>
+				<mx:DataGridColumn headerText="Item" dataField="col1" width="200"/>
+				<mx:DataGridColumn headerText="Descrição do material" dataField="col2" width="100"/>
+				<mx:DataGridColumn headerText="Qtde" dataField="col3" width="100"/>
+				<mx:DataGridColumn headerText="Unidade" dataField="col4" width="50"/>
+				<mx:DataGridColumn headerText="Marca" dataField="col5" width="50"/>
+				<mx:DataGridColumn headerText="Valor unitário" dataField="col6" width="60"/>
+				<mx:DataGridColumn headerText="Valor total" dataField="col7" width="50"/>
+				<mx:DataGridColumn headerText="Compra" dataField="col8"/>
+				<mx:DataGridColumn headerText="Qtde" dataField="col9"/>
+			</mx:columns>
+		</mx:DataGrid>
+		<mx:Label text="Condições de pagamento" horizontalCenter="-32" verticalCenter="-46"/>
+		<mx:TextInput width="310" horizontalCenter="205" verticalCenter="-46"/>
+		<mx:Label text="Prazo do contrato" horizontalCenter="-54" verticalCenter="-20"/>
+		<mx:Label text="Prazo de entrega" horizontalCenter="-55" verticalCenter="6"/>
+		<mx:TextInput width="310" horizontalCenter="205" verticalCenter="-20"/>
+		<mx:TextInput width="310" horizontalCenter="205" verticalCenter="6"/>
+	</mx:Canvas>
+</MDIWindow>

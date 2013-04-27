@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/sig/!svn/ver/129/trunk/application
+END
+config.ini
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/sig/!svn/ver/183/trunk/application/config.ini
+END
+.htaccess
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/sig/!svn/ver/2/trunk/application/.htaccess
+END

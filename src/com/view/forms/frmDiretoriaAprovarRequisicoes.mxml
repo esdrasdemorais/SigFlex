@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MDIWindow xmlns="flexmdi.containers.*" xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="800" height="600" backgroundAlpha="0.75" alpha="1.0" cornerRadius="10" 
+	borderStyle="solid" horizontalScrollPolicy="off" verticalScrollPolicy="off" 
+	borderColor="#000000" backgroundColor="#FFFFFF" borderAlpha="0" 
+	title="Diretoria - Aprovar Requisições" horizontalAlign="center" verticalAlign="middle" 
+	resizeStart="this.minWidth=800;minHeight=600" resizeEnd="this.minWidth=200;this.minHeight=200" 
+	initialize="init();">
+	
+	<mx:Metadata>
+		[Event(name="visualizarRelatorio", type="events.ReportEvent")]
+	</mx:Metadata>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.utils.ArrayUtil;
+			import com.model.ModelLocator;
+			import mx.rpc.Fault;
+			/* *************** Importa Classes e Componentes Utilizados em todos os scripts ************* */
+			import com.business.events.ReportEvent;
+			
+			import flash.events.MouseEvent;
+			import flash.utils.describeType;
+			
+			import com.model.ModelLocatorReport;
+			
+			import mx.collections.ArrayCollection;
+			import mx.containers.TitleWindow;
+			import mx.controls.Alert;
+			import mx.controls.Button;
+			import mx.controls.TextInput;
+			import mx.controls.dataGridClasses.DataGridColumn;
+			import mx.events.CloseEvent;
+			import mx.events.ListEvent;
+			import mx.managers.PopUpManager;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.utils.ObjectUtil;
+			
+			import org.doc.Document;
+			import org.doc.PaperFormat;
+			
+			import com.view.reports.custom.PreviewWindow;
+			import com.view.reports.dataproviders.DPTemplatePadrao;
+			import com.view.reports.templates.TemplatePadrao;
+			
+			//import templates.dataproviders.DemoReportDP;
+			//import templates.demo.DemoReport;
+			/* *************** Importa Classes e Componentes Utilizados em todos os scripts ************* */
+			
+			public var __model:ModelLocator = ModelLocator.getInstance(); 
+			
+			[Bindable] public var arrDiretores:ArrayCollection = null;
+			
+			[Bindable] public var arrCotacoesPendentesAprovacaoDir:ArrayCollection = null;
+			
+			[Bindable] public var arrCotacoesAprovadasDir:ArrayCollection = null;
+			
+			[Bindable] public var arrItensRequisicao:ArrayCollection = null;
+			
+			private function onError(event:FaultEvent):void
+			{
+				Alert.show(event.fault + "\n\n" + event.message + "\n\n" + event.fault.faultString + "\n\n" + 
+							event.fault.faultDetail + "\n\n" + event.fault.faultCode + "\n\n" + event.fault + "\n\n" + 
+							event.message + "\n\n" + event.fault.faultString + "\n\n" + event.fault.faultDetail + "\n\n" + 
+							event.fault.faultCode + "\n\n" + event.fault.rootCause, 
+							'Erro');
+			}
+			
+			public function faultHandler(event:FaultEvent):void
+			{
+				// Exibe o Erro
+				Alert.show(event.fault + "\n\n" + event.message + "\n\n" + event.fault.faultString + "\n\n" + 
+							event.fault.faultDetail + "\n\n" + event.fault.faultCode + "\n\n" + event.fault.rootCause, 
+							'Erro RemoteObject');
+			}
+			
+			private function init():void
+			{
+				modelDiretoria.getDiretores();
+			}
+			private function resultHandlerDiretores(event:ResultEvent):void
+			{
+				arrDiretores = new ArrayCollection(ArrayUtil.toArray(event.result));
+				cboDiretores.labelField = "RESPONSÁVEL";
+				
+				getCotacoesPendentesAprovacaoDir();
+				getCotacoesAprovadasDir();
+			}
+			
+			private function getCotacoesPendentesAprovacaoDir():void
+			{
+				modelDiretoria.getCotacoesPendentesAprovacaoDir(cboDiretores.selectedItem.Sigla);
+			}
+			private function resultHandlerGetCotacoesPendentesAprovacaoDir(event:ResultEvent):void
+			{
+				arrCotacoesPendentesAprovacaoDir = new ArrayCollection(ArrayUtil.toArray(event.result));
+				trace("\narrCotacoesPendentesAprovacaoDir="+
+					ObjectUtil.toString(arrCotacoesPendentesAprovacaoDir));
+			}
+			
+			private function getCotacoesAprovadasDir():void
+			{
+				modelDiretoria.getCotacoesAprovadasDir(cboDiretores.selectedItem.Sigla);				
+			}
+			private function resultHandlerGetCotacoesAprovadasDir(event:ResultEvent):void
+			{
+				arrCotacoesAprovadasDir = new ArrayCollection(ArrayUtil.toArray(event.result));
+				trace("\narrCotacoesAprovadasDir="+ObjectUtil.toString(arrCotacoesAprovadasDir));
+			}
+			
+			private function getItensRequisicao(id:int):void
+			{
+				modelDiretoria.getItensRequisicao("Ident_Cotacoes", id);
+			}
+			private function resultHandlerGetItensRequisicao(event:ResultEvent):void
+			{
+				arrItensRequisicao = new ArrayCollection(ArrayUtil.toArray(event.result));
+			}
+			
+			private function resultHandlerUpdateAprovCompraDir(event:ResultEvent):void
+			{
+				if(event.result.toString().length > 0)
+				{
+					getCotacoesPendentesAprovacaoDir();
+					getCotacoesAprovadasDir();
+				}
+			}
+			
+			private function btnVisualizar_click(event:MouseEvent):void
+			{
+				//If IsNull(Me.Lista0) Then
+			    //    MsgBox "Não Há registro SELECIONADO!", vbCritical, UCase(CurrentUser())
+			    //Else
+			        //stDocName = "rel_Requisicao_Compra"
+			        //DoCmd.OpenReport stDocName, acPreview, , "tbl_Req_Compras.ID = " & grdPrincipal.selectedItem.ID
+			    //End If
+			}
+		]]>
+	</mx:Script>
+	
+	<!--
+		Objeto responsável em conectar no servidor Zend AMF PHP e mapear a Classe PHP Controle.
+	-->
+	<mx:RemoteObject id="modelDiretoria" 
+		fault="faultHandler(event)" showBusyCursor="true" 
+		destination="zend" 
+		endpoint="http://localhost/sig/messagebroker/amf" 
+		source="Controle">
+		
+		<mx:method name="getDiretores"
+			result="resultHandlerDiretores(event)"
+			fault="onError(event)"
+		/>
+		
+		<mx:method name="getCotacoesPendentesAprovacaoDir"
+			result="resultHandlerGetCotacoesPendentesAprovacaoDir(event)"
+			fault="onError(event)"
+		/>
+		
+		<mx:method name="getCotacoesAprovadasDir"
+			result="resultHandlerGetCotacoesAprovadasDir(event)"
+			fault="onError(event)"
+		/>
+		
+		<mx:method name="updateAprovCompraDir"
+			result="resultHandlerUpdateAprovCompraDir(event)"
+			fault="onError(event)"
+		/>
+		
+		<mx:method name="getItensRequisicao"
+			result="resultHandlerGetItensRequisicao(event)"
+			fault="onError(event)"
+		/>
+		
+	</mx:RemoteObject>
+	
+	<mx:Canvas backgroundColor="#A3D5DB" backgroundAlpha="0.4" cornerRadius="10" verticalScrollPolicy="off" 
+		horizontalScrollPolicy="off" borderStyle="solid" borderColor="#FFFFFF" borderThickness="0" 
+		shadowDirection="center" horizontalCenter="0" verticalCenter="0" width="100%" height="100%">
+		
+		<mx:DataGrid x="10" y="46" width="59%" height="319" id="grdPrincipal" wordWrap="false" 
+				horizontalScrollPolicy="auto" itemRenderer="mx.controls.Label"
+				dataProvider="{arrCotacoesPendentesAprovacaoDir}"
+				change="getItensRequisicao(grdPrincipal.selectedItem.ID);" 
+				itemDoubleClick="modelDiretoria.updateAprovCompraDir(__model.usuarioVO.usLogin, grdPrincipal.selectedItem.ID);">
+		</mx:DataGrid>
+		
+		<mx:DataGrid y="46" width="37%" height="319" right="11" id="grdSecundario" wordWrap="false" 
+				horizontalScrollPolicy="auto"
+				dataProvider="{arrCotacoesAprovadasDir}" 
+				change="getItensRequisicao(grdSecundario.selectedItem.ID);"
+				itemDoubleClick="modelDiretoria.updateAprovCompraDir(null, grdSecundario.selectedItem.ID, null);">	
+			<!--<mx:columns>
+				<mx:DataGridColumn/>
+				<mx:DataGridColumn/>
+				<mx:DataGridColumn/>
+			</mx:columns>-->
+		</mx:DataGrid>
+		
+		<mx:ApplicationControlBar x="10" width="468" height="46" verticalCenter="110">			
+			<mx:Grid width="100%" height="100%">
+				<mx:GridRow width="100%" height="100%">
+					<mx:GridItem width="166" height="100%" colSpan="4" verticalAlign="middle">
+						<mx:Label text="Diretores / Gerentes:" fontWeight="bold" width="100%" height="21" textAlign="center" fontSize="12" alpha="0.0"/>
+					</mx:GridItem>
+					<mx:GridItem width="322" height="100%" colSpan="4" verticalAlign="middle">
+						<mx:ComboBox id="cboDiretores" dataProvider="{arrDiretores}" width="274" 
+							change="getCotacoesPendentesAprovacaoDir();getCotacoesAprovadasDir();">
+						</mx:ComboBox>
+					</mx:GridItem>
+				</mx:GridRow>
+			</mx:Grid>
+		</mx:ApplicationControlBar>
+		
+		<mx:DataGrid width="98%" height="130" bottom="10" horizontalCenter="-1" id="grdItensRequisicao" 
+				editable="false" dataProvider="{arrItensRequisicao}">
+		</mx:DataGrid>
+		<mx:ApplicationControlBar width="59%" height="28" autoLayout="false" id="ctbLista1" x="10" y="10">
+		<mx:Label text="000" width="33" fontSize="12" fontWeight="bold" selectable="false" truncateToFit="true" id="lblListaPrincipalCounter" textAlign="right"/>
+		<mx:Label width="100%" fontSize="12" fontWeight="bold" tabChildren="false" id="lblLista1" selectable="false" truncateToFit="true" text="Lista de Requisições Pendentes:"/>
+		</mx:ApplicationControlBar>
+		<mx:ApplicationControlBar width="37%" height="28" autoLayout="false" id="ctbLista2" x="491" y="10">
+			<mx:Label text="000" fontWeight="bold" fontSize="12" width="35" selectable="false" truncateToFit="true"/>
+			<mx:Label text="Lista de Requisições Aprovadas:" id="lblLista2" fontWeight="bold" fontSize="12" textAlign="left" width="100%" selectable="false" truncateToFit="true"/>
+		</mx:ApplicationControlBar>
+		<mx:ApplicationControlBar verticalAlign="top" visible="true" id="ctbMensagem" height="46" verticalCenter="111" right="10" width="294">
+			<mx:Grid width="100%" height="100%" paddingBottom="0">
+				<mx:GridRow width="100%" height="27">
+					<mx:GridItem width="100%" height="35" verticalAlign="middle" horizontalAlign="center">
+						<mx:Button label="Visualizar" width="70%" id="btnVisuMens" click="btnVisualizar_click(event)"/>
+					</mx:GridItem>
+				</mx:GridRow>
+			</mx:Grid>
+		</mx:ApplicationControlBar>
+	
+	</mx:Canvas>
+
+</MDIWindow>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application
+	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:views="com.view.*"
+	xmlns:business="com.business.*"
+	xmlns:control="com.business.controls.*"
+	layout="absolute"
+	creationComplete="init();">
+
+	<mx:Script>
+		<![CDATA[
+		
+		import mx.collections.ArrayCollection;
+		import mx.controls.Alert;
+		import mx.events.FlexEvent;
+		
+		import com.model.ModelLocator;
+		
+		[Bindable] public var __model:ModelLocator = ModelLocator.getInstance();
+		
+		/** Initilizes the main menu
+		* @param none
+		* @return void
+		**/
+		public function init():void
+		{
+			var mnuItems:Array = [{label: "Public"}];
+			__model.MAINNAV = new ArrayCollection(mnuItems);
+			
+			this.systemManager.addEventListener(FlexEvent.IDLE, checkInactivity);
+		}
+		
+		/** Handles navigation when a user
+		* clicks a button in the main nav bar
+		* @param uint – Nav Bar Buttons SelectedIndex
+		
+		* @return String – returns the lable text associated
+		* with the SelectedIndex
+		
+		**/
+		public function handleMainNav(i:uint):void
+		{
+			switch(__model.MAINNAV.getItemAt(i).label)
+			{
+				case 'Control Panel':
+					__model.workflowState = ModelLocator.CONTROLPANEL;
+				break;
+				default:
+					__model.workflowState = ModelLocator.PUBLIC;
+				break;
+			}
+		}
+		
+		// If no activity is detected for 10 seconds reset the
+		// user sessionID in the model.
+		// Force the user to login in again which will generate a new sessionid.
+		public function checkInactivity(e:FlexEvent):void {
+		   // Normally this would be set to a longer time span but for demo purposes 10 seconds is fine
+		   if(e.currentTarget.mx_internal::idleCounter == 100) {
+			    //reset the sessionid variable in the model
+			   __model.CURRENTSESSIONID='';
+			   // reset the menu bar
+			   __model.MAINNAV.removeAll();
+			   // we need to add the default option(s) back
+			    __model.MAINNAV.addItem("Public");
+			    Alert.show("Sorry your session has timed out, please login to continue.");
+			    // transfer the user to the login screen
+			    __model.workflowState =  ModelLocator.LOGIN;
+		   }
+		}
+		]]>
+	</mx:Script>
+
+	<!-- Cairngorm Mappings -->
+	<business:Services id="services" />
+	
+	<control:Controller id="controller"/>
+	
+	<mx:ViewStack id="userViews"
+		horizontalCenter="0"
+		verticalCenter="0"
+		selectedIndex="{__model.workflowState}">
+		
+		<views:Login/>
+		<views:ControlPanel/>
+		<views:PublicView />
+	
+	</mx:ViewStack>
+	
+	<mx:ApplicationControlBar
+		y="100"
+		width="400"
+		height="36"
+		horizontalCenter="0">
+		
+			<mx:MenuBar id="mainNav"
+				width="100%" height="100%"
+				dataProvider="{__model.MAINNAV}"
+				click="handleMainNav(mainNav.selectedIndex);"/>
+					
+	</mx:ApplicationControlBar>
+	
+</mx:Application>

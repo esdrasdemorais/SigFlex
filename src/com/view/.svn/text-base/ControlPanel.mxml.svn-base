@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+    xmlns:mx="http://www.adobe.com/2006/mxml" 
+    width="100%" height="100%"
+    creationComplete="init();">
+    
+    <mx:Script>
+        <![CDATA[
+            import com.business.events.GenerateSIDEvent;
+            import com.model.ModelLocator;
+            
+            [Bindable] public var __model:ModelLocator = ModelLocator.getInstance();
+            
+            /**
+            * Initializes the control panel by enabling UI elements based on
+            * the users acces privileges that are set in the model.
+            *
+            * @param none
+            *
+            * @return void
+            * 
+            */
+            public function init():void {
+                // determine which buttons will be enabled or disabled
+                Admin.enabled = __model.admingranted;
+                Super.enabled = __model.supergranted;
+            }
+            
+            public function regenerateSID():void {
+                var getNewSIDEvent:GenerateSIDEvent = new GenerateSIDEvent();
+                getNewSIDEvent.dispatch();
+            }
+        ]]>
+    </mx:Script>
+
+	<mx:VBox fontFamily="Verdana" 
+	    horizontalAlign="center" 
+	    verticalAlign="middle" 
+	    fontSize="10" 
+	    color="#020202" 
+	    width="100%" 
+	    height="100%"
+	     left="0" top="0">
+	    
+	    <mx:Label text="Welcome! This is the Secure page." />
+	    <mx:Label text="You are logged in with the User Role of"/>
+	    <mx:Label text="{__model.CURRENT_USER_ROLE}" fontFamily="Verdana" fontSize="12" fontWeight="bold" color="#FC0202"/>
+	    <mx:Label text="and sessionid {__model.CURRENTSESSIONID}"/>
+	    <mx:Button id="Admin" label="Admin Functions"/>
+	    <mx:Button id="Super" label="Super Admin Functions" click="regenerateSID();"/>
+	    <mx:Button id="btn_common" label="Create Project"/>    
+	    <mx:Button id="btn_common0" label="Assign Tasks"/>
+	
+	</mx:VBox>
+     
+</mx:Canvas>

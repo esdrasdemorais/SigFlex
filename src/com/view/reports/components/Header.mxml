@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PrintComponent xmlns="org.print.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="60">	
+
+	<mx:Text text="PROGRESSO E DESENVOLVIMENTO DE GUARULHOS S/A" fontWeight="bold" fontSize="9" textAlign="center" x="103" y="6"/>
+	
+	<mx:Text text="SISTEMA DE INFORMAÇÕES GERENCIAIS" x="134.5" y="26" fontStyle="normal" textAlign="center" fontWeight="normal"/>
+	
+	<mx:HRule left="5" bottom="5" right="5"/>
+
+</PrintComponent>

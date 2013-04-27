@@ -1,0 +1,306 @@
+body,html
+{
+	background:#EEE;
+	color:#474295;
+	font-family:Arial,Verdana,Helvetica,sans-serif;
+	font-size:100%;
+	margin:0;
+	padding:0;
+}
+h1
+{
+	font-size:1.4em;
+	color:#800000;
+	background:#FFF;
+	background-color:transparent;
+}
+h2
+{
+	background:#FFF;
+}
+a
+{
+	color:#160F83;
+}
+select, textarea, input
+{
+	color:#000;
+	font:12px Tahoma, Arial;
+	margin:4px 0;
+}
+select
+{
+	width:250px;
+}
+hr
+{
+	border:0;
+	height:0;
+	border-bottom:1px solid;
+	background:#160F83;
+}
+#content
+{
+	width:1000px;
+	margin:0 auto;
+}
+#panel
+{
+	clear:both;
+	float:left;
+	width:100%;
+	min-height:320px;
+	margin:5px 0;
+}
+#panel table
+{
+	background:#FFFFFF;
+	width:100%;
+}
+#panel table th
+{
+	background:#EEEEEE;
+}
+#panel table td
+{
+	font:12px Arial;
+	text-align:center;
+}
+.formbutton
+{
+	float:left;
+	margin-left:50px;
+}
+#header
+{
+	float:left;
+	width:100%;
+	height:60px;
+	margin:0;
+	padding:0;
+	background:#E1EDF9 url("/tramitacao_documentos/public/images/header.jpg") center;
+	background-repeat:no-repeat;
+}
+#menu_bar
+{
+	clear:both;
+	float:left;
+	width:100%;
+	margin:0;
+	padding:0;
+	background:url("/tramitacao_documentos/public/images/menu_background.gif") center;
+	background-repeat:repeat-x;
+	font:14px Arial,Verdana;
+}
+#menu_bar ul, #menu_bar ul ul
+{
+	width:100%; /* Width of Menu Items */
+	border-bottom: 0px solid #ccc;
+	margin:0;
+	padding:0;
+	/*text-align:left;*/
+	/* background: #fff; */ /* IE6 Bug */
+	/* background: blue;  /* IE6 Bug cor */ /* do fundo dos menus */
+}
+#menu_bar ul li
+{
+	background:url("/tramitacao_documentos/public/images/menu_background.gif") center;
+    position: relative;
+	float:left;
+	display:inline;
+	list-style:none;
+	/*margin:0 15px;
+	padding:0 10px;*/
+	border-right:1px solid #000;
+	/*color:#FFF;*/
+	font-weight:900;
+}
+
+/* Fix IE. Hide from IE Mac \*/
+* html #menu_bar ul li { float: left; height: 1%; }
+* html #menu_bar ul li a { height: 1%; }
+/* End */
+
+#menu_bar ul ul
+{
+	position:absolute;
+	display:none;
+	left:0px; /* Set 1px less than menu width */
+	top:23px;
+}
+
+#menu_bar ul li:hover ul ul ,
+#menu_bar ul li:hover ul ul ul,
+#menu_bar ul li.over ul ul,
+#menu_bar ul li.over ul ul ul { display:none; top:17px;} /* Hide sub-menus initially */
+
+#menu_bar ul li:hover ul,
+#menu_bar ul li li:hover ul,
+#menu_bar ul li li li:hover ul,
+#menu_bar ul li.over ul,
+#menu_bar ul li li.over ul,
+#menu_bar ul li li li.over ul { display:block; } /* The magic */
+
+#menu_bar ul li a
+{
+	display: block;
+	float:left;
+    text-decoration:none;
+    color:#FFF;
+	padding:5px;
+	width:150px;
+	text-align:center;
+	/*border:1px solid #FFF;*/
+	border-bottom:1;
+}
+
+#menu_bar ul li ul li a { padding: 2px 5px; border-bottom:1px solid #000 } /* Sub Menu Styles */
+
+#menu_bar ul li.menuparent { background:transparent url("/tramitacao_documentos/public/images/menu_background.gif") none repeat-x; width:150px; } /* transparent */
+
+#menu_bar ul li a:link
+{
+	color:#FFF;
+	text-decoration:none;
+}
+#menu_bar ul li a:visited
+{
+	color:#AAA;
+	text-decoration:none;
+}
+#menu_bar ul li a:hover, #menu_bar ul li.menuparent:hover, #menu_bar ul li.over
+{
+	color:#AAA;
+	text-decoration:underline;
+}
+#menu_bar ul li a:active
+{
+	color:#000;
+	text-decoration:none;
+}
+#menu_icons
+{
+	clear:both;
+	width:100%;
+	margin:0;
+	padding:5px 0;
+	background:#FFF;
+	color:#000;
+	font-size:12px;
+	font-family: Verdana,Arial,Helvetica,Sans-Serif;
+	float:left;
+}
+#menu_icons ul
+{
+	width:100%;
+	margin:0;
+	padding:0;
+	text-align:left;
+}
+#menu_icons ul li
+{
+	float:left;
+	display:inline;
+	list-style:none;
+	line-height:17px;
+	height:52px;
+	margin:0 15px;
+	padding:0 10px;
+	border-right:1px solid #AAA;
+	border-bottom:1px solid #AAA;
+	text-align:center;
+}
+#menu_icons ul li a img
+{
+	border:none;
+}
+#menu_icons ul li a:link
+{
+	color:#000;
+	text-decoration:none;
+}
+#menu_icons ul li a:visited
+{
+	color:#474295;
+	text-decoration:none;
+}
+#menu_icons ul li a:hover
+{
+	color:#AAA;
+	text-decoration:underline;
+}
+#menu_icons ul li a:active
+{
+	color:#474295;
+	text-decoration:none;
+}
+.center_block
+{
+	text-align:center;
+}
+.clr
+ {
+	clear:both;
+}
+#footer_dev 
+{
+	border:1px solid #160F83;
+	text-align:center;
+}
+#footer
+{
+	clear:both;
+	font-size:1em;
+	padding:0.3em 0 0.5em;
+	text-align:center;
+}
+div#divTopoFixa
+{
+	bottom:0;
+	position:fixed;
+	right:0;
+}
+.zend_form label
+{
+	width:250px;
+	float:left;
+}
+.zend_form_tramitacao label
+{
+	float:left;
+	width:100%;
+	margin-bottom:5px;
+}
+.zend_form_login
+{
+	text-align:center;
+	margin:0 auto;
+	padding:0;
+}
+.zend_form_login .formbutton
+{
+	text-align:center;
+	width:100%;
+	margin:0;
+}
+.pendente, .receber
+{
+	color:#800000;
+	font-size:11px
+}
+@media print
+{
+	*{
+	margin:0;
+	padding:0;
+	}
+	.LandscapeDiv{
+			width: 100%;
+			height: 100%;
+			filter: progid:DXImageTransform.Microsoft.BasicImage(Rotation=3);
+	}
+	form #btn_imprimir
+	{
+		display:none
+	}
+}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="org.print.*" xmlns:mx="http://www.adobe.com/2006/mxml" 
+	width="100%" height="100%"
+	xmlns:ns1="com.view.reports.components.*" xmlns:ns2="com.view.reports.demo.*">
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.utils.ObjectUtil;
+			import mx.controls.Alert;
+			import mx.collections.ArrayCollection;
+			
+			[Bindable] public var arrDados:ArrayCollection = new ArrayCollection(); 
+			public override function loadData():void
+			{
+				this.dgReport.dataProvider = this.dataProvider.tabela;
+				arrDados = this.dataProvider.tabela;
+				footer.lblEmissao.text = 'Emitido em ' + arrDados[0].Data_Digit + ' por ' + arrDados[0].Usuario;
+			}
+		]]>
+	</mx:Script>
+	<Body width="100%" height="100%">
+		<ns2:Header>
+		</ns2:Header>
+		<ReportDataGrid id="dgReport" width="100%" height="100%"><!--dataProvider="{arrDados}"-->
+			<columns>
+				<!-- =Formato([Num_req];"00000") & "/" & [Ano] -->
+				<mx:DataGridColumn headerText="REQUISIÇÃO" dataField="Num_req"/>
+				<mx:DataGridColumn headerText="Ano" dataField="Ano"/>
+				<mx:DataGridColumn headerText="DT EMISS" dataField="Data_Emiss"/>
+				<mx:DataGridColumn headerText="c_Medio1" dataField="c_Medio1"/>
+		        <mx:DataGridColumn headerText="cod_Produto" dataField="cod_Produto"/>
+		        <mx:DataGridColumn headerText="Data_Digit" dataField="Data_Digit"/>
+		        <mx:DataGridColumn headerText="Data_Emiss" dataField="Data_Emiss"/>
+		        <mx:DataGridColumn headerText="Desc_mat" dataField="Desc_mat"/>
+		        <mx:DataGridColumn headerText="DESCRICAO" dataField="DESCRICAO"/>
+		        <mx:DataGridColumn headerText="Destinacao" dataField="Destinacao"/>
+		        <mx:DataGridColumn headerText="Dir" dataField="Dir"/>
+		        <mx:DataGridColumn headerText="DirR" dataField="DirR"/>
+		        <mx:DataGridColumn headerText="DT_Cadastro" dataField="DT_Cadastro"/>
+		        <!--<mx:DataGridColumn headerText="Ger" dataField="Ger"/>
+		        <mx:DataGridColumn headerText="GerR" dataField="GerR"/>
+		        <mx:DataGridColumn headerText="ID" dataField="ID"/>
+		        <mx:DataGridColumn headerText="Ident_C_Custo" dataField="Ident_C_Custo"/>
+		        <mx:DataGridColumn headerText="Ident_local_entrega" dataField="Ident_local_entrega"/>
+		        <mx:DataGridColumn headerText="Ident_req_Compras" dataField="Ident_req_Compras"/>
+		        <mx:DataGridColumn headerText="Ident_setor" dataField="Ident_setor"/>
+		        <mx:DataGridColumn headerText="Item" dataField="Item"/>
+		        <mx:DataGridColumn headerText="Justificativa" dataField="Justificativa"/>
+		        <mx:DataGridColumn headerText="Num_req" dataField="Num_req"/>
+		        <mx:DataGridColumn headerText="Prazo_solic" dataField="Prazo_solic"/>
+		        <mx:DataGridColumn headerText="Process" dataField="Process"/>
+		        <mx:DataGridColumn headerText="qtd_sld" dataField="qtd_sld"/>
+		        <mx:DataGridColumn headerText="quantidade" dataField="quantidade"/>
+		        <mx:DataGridColumn headerText="Requisitante" dataField="Requisitante"/>
+		        <mx:DataGridColumn headerText="Setor1" dataField="Setor1"/>
+		        <mx:DataGridColumn headerText="unidade" dataField="unidade"/>
+		        <mx:DataGridColumn headerText="Usuario" dataField="Usuario"/>
+		        <mx:DataGridColumn headerText="Valor_Estimado" dataField="Valor_Estimado"/>
+		        <mx:DataGridColumn headerText="vlr_ult_compra" dataField="vlr_ult_compra"/>-->
+			</columns>
+		</ReportDataGrid>
+	</Body>
+	<ns1:Footer id="footer" width="100%">
+		
+	</ns1:Footer>
+</Report>

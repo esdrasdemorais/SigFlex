@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/sig/!svn/ver/139/trunk/src/scripts/controle
+END
+scrComprasRequisicoes.as
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/sig/!svn/ver/88/trunk/src/scripts/controle/scrComprasRequisicoes.as
+END
+scrComprasCotacoes.as
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/sig/!svn/ver/92/trunk/src/scripts/controle/scrComprasCotacoes.as
+END
+scrComprasCorrecoes.as
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/sig/!svn/ver/88/trunk/src/scripts/controle/scrComprasCorrecoes.as
+END
+scrComprasApCotacoes.as
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/sig/!svn/ver/196/trunk/src/scripts/controle/scrComprasApCotacoes.as
+END
+scrComprasControle.as
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/sig/!svn/ver/196/trunk/src/scripts/controle/scrComprasControle.as
+END

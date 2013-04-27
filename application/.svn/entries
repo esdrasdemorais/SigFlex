@@ -1,0 +1,71 @@
+10
+
+dir
+162
+https://server1.proguaru.sa:8383/svn/sig/trunk/application
+https://server1.proguaru.sa:8383/svn/sig
+
+
+
+2010-04-08T19:09:58.204315Z
+129
+esdrassilva
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cf2417c3-a2e5-eb4d-bfd9-42f5932bce7e
+
+utils
+dir
+
+config.ini
+file
+183
+
+
+
+2010-07-16T18:22:40.000000Z
+47f3e4d59a8f374601c9d1dc94201783
+2010-07-16T18:59:29.254403Z
+183
+esdrassilva
+
+models
+dir
+
+services
+dir
+
+
+
+delete
+
+controllers
+dir
+
+.htaccess
+file
+
+
+
+
+2010-07-13T17:54:44.000000Z
+5cc8a02be988615b049f5abecba2f3a0
+2010-02-03T14:52:44.472189Z
+2
+esdrassilva
+
+views
+dir
+

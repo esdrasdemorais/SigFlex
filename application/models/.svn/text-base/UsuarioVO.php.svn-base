@@ -1,0 +1,32 @@
+<?php
+
+class UsuarioVO
+{
+	public $usCodigo 	 = 0;
+	public $nsCodigo 	 = 0;
+	public $usLogin 	 = '';
+	public $usDrt 		 = 0;
+	public $usNome 	 	 = '';
+	public $usSenha 	 = '';
+	public $usStatus 	 = '';
+	public $usCpf 		 = '';
+	public $usEmail		 = '';
+	public $usDtAtualiza = '';
+	
+	public function UsuarioVO($row=null)
+	{
+		if($row)
+		{
+			$this->usCodigo 	= $row['us_codigo'];
+			$this->nsCodigo 	= $row['ns_codigo'];
+			$this->usLogin  	= htmlspecialchars($row['us_login']);
+		    $this->usDrt    	= $row['us_drt'];
+		    $this->usNome   	= $row['us_nome'];
+		    $this->usSenha  	= htmlspecialchars($row['us_senha']);
+		    $this->usStatus 	= $row['us_status'];
+		    $this->usCpf		= $row['us_cpf']; 
+		    $this->usEmail  	= $row['us_email']; 
+		    $this->usDtAtualiza = $row['us_dtatualiza'];
+		}
+	}
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rds:ServiceLocator 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:rds="com.adobe.cairngorm.business.*">
+
+<mx:RemoteObject
+	id="usuarioService"
+	destination="zend"
+	source="Usuario"
+	showBusyCursor="true">
+	
+	<mx:method name="checkLdapLogin"/>
+
+	<mx:method name="generateNewSessionID"/>
+
+</mx:RemoteObject>
+
+</rds:ServiceLocator>

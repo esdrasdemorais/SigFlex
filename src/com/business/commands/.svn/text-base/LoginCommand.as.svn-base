@@ -1,0 +1,65 @@
+package com.business.commands
+{
+    import com.adobe.cairngorm.commands.ICommand;
+    import com.adobe.cairngorm.control.CairngormEvent;
+    import com.business.delegates.LoginDelegate;
+    import com.business.events.LoginEvent;
+    import com.model.ModelLocator;
+    import mx.controls.Alert;
+    import mx.rpc.IResponder;
+
+    public class LoginCommand implements ICommand, IResponder
+    {
+	    public var __model:ModelLocator = ModelLocator.getInstance();
+	
+	    public function LoginCommand() { }
+	
+	    public function execute(event:CairngormEvent):void
+	    {
+		    var loginEvent:LoginEvent = event as LoginEvent;
+		    var delegate:LoginDelegate = new LoginDelegate( this );
+		    delegate.verifyUser(loginEvent.userVO);
+	    }
+
+	    public function result(event:Object):void {
+		    if(event.result)
+		    {
+			    if(event.result == "FAILURE_CREDENTIAL_INVALID")
+			    {
+			    	mx.controls.Alert.show("Sorry! Either your User Name or your password are incorrect. Please try again or you can view the public page");
+			   	 	return;
+		    	}
+			    var accessPrivs:Object = event.result;
+			    if(accessPrivs["viewRestrictedUI"]=="allowed")
+			    {
+				    // set default privileges
+				    __model.supergranted = false;
+				    __model.admingranted = false;
+				    __model.MAINNAV.addItem({label: "Control Panel"});
+				    __model.workflowState = ModelLocator.CONTROLPANEL;
+				    __model.CURRENT_USER_ROLE = accessPrivs["userRole"];
+				    if(__model.CURRENT_USER_ROLE == "Super") {
+					    __model.supergranted = true;
+					    __model.admingranted = true;
+				    } else if(__model.CURRENT_USER_ROLE == "admin") {
+					    __model.supergranted = false;
+					    __model.admingranted = true;
+				    }
+			    } else {
+				    __model.workflowState = ModelLocator.PUBLIC;
+			    }
+			    // DEBUG MODE
+			    trace("[User Login] – user Role:" +accessPrivs["userRole"]);
+			    trace("[User Login] – viewPublicUI:" +accessPrivs["viewPublicUI"]);
+			    trace("[User Login] – viewRestrictedUI:" +accessPrivs["viewRestrictedUI"]);
+			    trace("[User Login] – createManager:" +accessPrivs["createManager"]);
+			    trace("[User Login] – viewLogs:" +accessPrivs["viewLogs"]);
+		    }
+	    }
+
+	    public function fault(event:Object):void
+	    {
+	    	trace("[User Login] – Error Connecting!" + event.toString());
+	    }
+    }
+}
